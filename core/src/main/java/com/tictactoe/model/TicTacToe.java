@@ -15,8 +15,9 @@ public class TicTacToe {
     private Integer id;
     private Player player1;
     private Player player2;
-    private TicTacToeBoard board;
+    private TicTacToeBoard ticTacToeBoard;
     private Player winner;
     private boolean draw;
     private GameStatus gameStatus;
+    private Player whoseTurn;
 }
