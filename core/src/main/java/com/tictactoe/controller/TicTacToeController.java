@@ -51,6 +51,7 @@ public class TicTacToeController {
         return ResponseEntity.ok(moveResult);
     }
 
+    @Deprecated
     @PostMapping("/{ticTacToeId}/cpu/move")
     public ResponseEntity<?> makeAMove(@PathVariable("ticTacToeId") Integer ticTacToeId, @RequestBody Player player) {
         MoveResult moveResult = ticTacToeGameService.cpuMove(ticTacToeId, player);

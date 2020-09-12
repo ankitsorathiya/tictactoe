@@ -44,7 +44,7 @@ public class TicTacToeGameMoveServiceImpl implements TicTacToeGameMoveService {
                     .winner(move.getPlayer());
             //winning move;
         }
-        if (isTopLeftToBotoomRightDiagonal(coordinate)) {
+        if (isTopLeftToBottomRightDiagonal(coordinate)) {
             playerMoveCache.setTopLeftToBottomRight(playerMoveCache.getTopLeftToBottomRight() + 1);
             if (playerMoveCache.getTopLeftToBottomRight() == ticTacToeBoard.getBoardSize()) {
                 moveResultBuilder.winningMove(true)
@@ -64,11 +64,11 @@ public class TicTacToeGameMoveServiceImpl implements TicTacToeGameMoveService {
         if (ticTacToeBoard.getMovesPlayed() == ticTacToeBoard.getBoardSize() * ticTacToeBoard.getBoardSize()) {
             moveResultBuilder.draw(true);
         }
-        log.info("{}", ticTacToeBoard);
+        System.out.println(ticTacToeBoard.toString());
         return moveResultBuilder.build();
     }
 
-    private boolean isTopLeftToBotoomRightDiagonal(Coordinate coordinate) {
+    private boolean isTopLeftToBottomRightDiagonal(Coordinate coordinate) {
         return (coordinate.getRow() == coordinate.getCol());
     }
 
@@ -81,7 +81,7 @@ public class TicTacToeGameMoveServiceImpl implements TicTacToeGameMoveService {
     @Override
     public boolean isCoordinatesFree(TicTacToe ticTacToe, Coordinate coordinate) {
         //coordinates are 0 based
-        if (coordinate.getRow() <= 0 || coordinate.getCol() <= 0) {
+        if (coordinate.getRow() < 0 || coordinate.getCol() < 0) {
             throw new TicTacToeException(HttpStatus.BAD_REQUEST, "negative coordinates");
         }
         if (coordinate.getCol() >= ticTacToe.getTicTacToeBoard().getBoardSize() || coordinate.getRow() >= ticTacToe.getTicTacToeBoard().getBoardSize()) {

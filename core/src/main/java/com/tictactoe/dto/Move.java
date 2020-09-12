@@ -15,5 +15,5 @@ import lombok.ToString;
 public class Move {
     private Player player;
     private int gameId;
-    private Coordinate coordinate;
+    private Coordinate coordinate;//for cpu user will be null;
 }

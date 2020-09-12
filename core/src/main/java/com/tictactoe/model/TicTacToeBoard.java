@@ -22,11 +22,11 @@ public class TicTacToeBoard {
     public String toString() {
         StringBuilder boardString = new StringBuilder();
         for (int row = 0; row < boardSize; row++) {
-            for (int col = boardSize; col < boardSize; col++) {
+            for (int col = 0; col < boardSize; col++) {
                 boardString.append(board[row][col] == null ? "|_|" : "|" + board[row][col] + "|");
             }
             boardString.append("\n");
         }
-        return board.toString();
+        return boardString.toString();
     }
 }

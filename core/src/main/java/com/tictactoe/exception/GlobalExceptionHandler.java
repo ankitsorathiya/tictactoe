@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> customerException(TicTacToeException ex) {
         Map<String, Object> errors = new HashMap<>();
         errors.put("message", ex.getMessage());
-        errors.put("code", ex.getCode());
+        errors.put("code", ex.getHttpStatus().value());
         if (Objects.nonNull(ex.getData())) {
             errors.put("data", ex.getData());
         }

@@ -15,4 +15,5 @@ public class MoveResult {
     private boolean winningMove;
     private boolean draw;
     private Player winner;
+    private Coordinate coordinate;// for cpu user this will be returned.
 }

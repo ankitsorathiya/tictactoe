@@ -5,7 +5,7 @@ import java.util.Collection;
 public interface AbstractRepository<E> {
     Collection<E> findAll();
 
-    E findById(Integer id);
+    E findById(int id);
 
     Collection<E> createAll(Collection<E> entities);
 

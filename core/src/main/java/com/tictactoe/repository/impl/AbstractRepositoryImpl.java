@@ -19,8 +19,8 @@ public abstract class AbstractRepositoryImpl<E> implements AbstractRepository<E>
     }
 
     @Override
-    public E findById(Integer id) {
-        Optional<E> optionalE = getAllEntities().stream().filter(entity -> getId(entity) == id).findFirst();
+    public E findById(int id) {
+        Optional<E> optionalE = getAllEntities().stream().filter(entity -> id == getId(entity)).findFirst();
         if (optionalE.isPresent()) {
             return optionalE.get();
         }
@@ -44,6 +44,7 @@ public abstract class AbstractRepositoryImpl<E> implements AbstractRepository<E>
         Collection<E> existingEntities = getAllEntities();
         int id = existingEntities.size() + 1;// getting new Id
         this.setId(entity, id);
+        existingEntities.add(entity);
         return entity;
     }
 }

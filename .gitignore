@@ -64,13 +64,15 @@ local.properties
 .idea/**/shelf
 
 # Sensitive or high-churn files
+.idea
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
-
+.idea/compiler.xml
+.idea/encoding.xml
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries

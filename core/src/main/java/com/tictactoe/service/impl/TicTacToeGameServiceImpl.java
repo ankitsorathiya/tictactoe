@@ -15,6 +15,7 @@ import com.tictactoe.repository.TicTacToeRepository;
 import com.tictactoe.service.IntelligenceMoveService;
 import com.tictactoe.service.TicTacToeGameMoveService;
 import com.tictactoe.service.TicTacToeGameService;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@Setter
 public class TicTacToeGameServiceImpl implements TicTacToeGameService {
     @Autowired
     private PlayerRepository playerRepository;
@@ -60,6 +62,7 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
         if (ticTacToeGameDTO.isPlayWithCpu()) {
             player2 = playerRepository.create(Player.builder()
                     .cpu(true)
+                    .symbol('o')
                     .playerName("Cpu playing with" + player1.getPlayerName()).build());
         }
         GameStatus gameStatus = GameStatus.CREATED;
@@ -114,7 +117,7 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
         Optional<PlayerMoveCache> playerMoveCacheOptional = ticTacToe.getTicTacToeBoard().getPlayerMoveCaches().stream().filter(playerMoveCache -> Objects.isNull(playerMoveCache.getPlayer())).findFirst();
         playerMoveCacheOptional.get().setPlayer(player);
         ticTacToe.setGameStatus(GameStatus.JOINED);
-        return null;
+        return ticTacToe;
     }
 
     @Override
@@ -137,6 +140,10 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
             log.error("invalid game stage {} can't make move {}", ticTacToe.getGameStatus().name(), move);
             throw new TicTacToeException(HttpStatus.BAD_REQUEST, "invalid game stage " + ticTacToe.getGameStatus().name() + ", can not mark move");
         }
+        if (move.getPlayer().isCpu()) {
+            Coordinate coordinate = intelligenceMoveService.findBestPossibleMove(ticTacToe, move.getPlayer());
+            move.setCoordinate(coordinate);
+        }
         MoveResult moveResult = ticTacToeGameMoveService.move(ticTacToe, move);
         if (moveResult.isWinningMove()) {
             ticTacToe.setGameStatus(GameStatus.FINISHED);
@@ -156,6 +163,7 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
     }
 
     @Override
+    @Deprecated
     public MoveResult cpuMove(int gameId, Player player) {
         TicTacToe ticTacToe = findGame(gameId);
         Coordinate coordinate = intelligenceMoveService.findBestPossibleMove(ticTacToe, player);
