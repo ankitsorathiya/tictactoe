@@ -5,6 +5,7 @@ import com.tictactoe.dto.MoveResult;
 import com.tictactoe.dto.TicTacToeGameDTO;
 import com.tictactoe.model.Player;
 import com.tictactoe.model.TicTacToe;
+import com.tictactoe.model.TicTacToeBoard;
 
 public interface TicTacToeGameService {
     TicTacToe findGame(int gameId);
@@ -14,6 +15,8 @@ public interface TicTacToeGameService {
     TicTacToe join(int gameId, Player player);
 
     TicTacToe start(int gameId);
+
+    TicTacToeBoard findBoard(int gameId);
 
     MoveResult move(Move move);
 

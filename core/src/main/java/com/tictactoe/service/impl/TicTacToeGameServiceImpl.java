@@ -163,6 +163,11 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
     }
 
     @Override
+    public TicTacToeBoard findBoard(int gameId) {
+        return this.findGame(gameId).getTicTacToeBoard();
+    }
+
+    @Override
     @Deprecated
     public MoveResult cpuMove(int gameId, Player player) {
         TicTacToe ticTacToe = findGame(gameId);
@@ -170,4 +175,5 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
         Move move = Move.builder().coordinate(coordinate).player(player).gameId(gameId).build();
         return this.move(move);
     }
+
 }
