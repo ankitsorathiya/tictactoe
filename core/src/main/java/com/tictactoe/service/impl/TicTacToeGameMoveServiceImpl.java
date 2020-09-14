@@ -30,34 +30,34 @@ public class TicTacToeGameMoveServiceImpl implements TicTacToeGameMoveService {
         TicTacToeBoard ticTacToeBoard = ticTacToe.getTicTacToeBoard();
         ticTacToeBoard.getBoard()[coordinate.getRow()][coordinate.getCol()] = move.getPlayer().getSymbol();
         PlayerMoveCache playerMoveCache = ticTacToeBoard.getPlayerMoveCaches().stream().filter(cache -> cache.getPlayer().getId().equals(move.getPlayer().getId())).findFirst().get();
+
         playerMoveCache.getRowPositions()[coordinate.getRow()] = playerMoveCache.getRowPositions()[coordinate.getRow()] + 1;
         MoveResult.MoveResultBuilder moveResultBuilder = MoveResult.builder()
                 .moved(true);
         if (playerMoveCache.getRowPositions()[coordinate.getRow()] == ticTacToeBoard.getBoardSize()) {
             moveResultBuilder.winningMove(true)
                     .winner(move.getPlayer());
-            //winning move;
         }
+
         playerMoveCache.getColPositions()[coordinate.getCol()] = playerMoveCache.getColPositions()[coordinate.getCol()] + 1;
         if (playerMoveCache.getColPositions()[coordinate.getCol()] == ticTacToeBoard.getBoardSize()) {
             moveResultBuilder.winningMove(true)
                     .winner(move.getPlayer());
-            //winning move;
         }
+
         if (isTopLeftToBottomRightDiagonal(coordinate)) {
             playerMoveCache.setTopLeftToBottomRight(playerMoveCache.getTopLeftToBottomRight() + 1);
             if (playerMoveCache.getTopLeftToBottomRight() == ticTacToeBoard.getBoardSize()) {
                 moveResultBuilder.winningMove(true)
                         .winner(move.getPlayer());
-                //winning move;
             }
         }
+
         if (isBottomLeftToTopRightDiagonal(ticTacToeBoard.getBoardSize(), coordinate)) {
             playerMoveCache.setBottomLeftToTopRight(playerMoveCache.getBottomLeftToTopRight() + 1);
             if (playerMoveCache.getBottomLeftToTopRight() == ticTacToeBoard.getBoardSize()) {
                 moveResultBuilder.winningMove(true)
                         .winner(move.getPlayer());
-                //winning move;
             }
         }
         ticTacToeBoard.setMovesPlayed(ticTacToeBoard.getMovesPlayed() + 1);

@@ -153,11 +153,6 @@ public class TicTacToeGameServiceImpl implements TicTacToeGameService {
         if (moveResult.isMoved()) {
             Player whoseTurn = ticTacToe.getPlayer1().equals(ticTacToe.getWhoseTurn()) ? ticTacToe.getPlayer2() : ticTacToe.getPlayer1();
             ticTacToe.setWhoseTurn(whoseTurn);
-            //keeping it here, if integrated as api need to move separetly
-            if (whoseTurn.isCpu()) {
-                Coordinate coordinate = intelligenceMoveService.findBestPossibleMove(ticTacToe, whoseTurn);
-                this.move(Move.builder().coordinate(coordinate).gameId(move.getGameId()).player(whoseTurn).build());
-            }
         }
         return moveResult;
     }
